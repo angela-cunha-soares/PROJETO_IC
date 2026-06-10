@@ -1,7 +1,7 @@
 # Resultados — Aplicação de Machine Learning para análise da qualidade da água na bacia do PCJ
 
-Relatório de **resultados** do projeto de Iniciação Científica. Segue a estrutura
-metodológica do projeto (seções 3.1 a 3.5), apresentando, para cada etapa, os
+Relatório de **resultados** do projeto de Iniciação Científica (IC, Guilherme). Segue a estrutura
+metodológica do projeto (seções 3.1 a 3.5, ver pdf do projeto FAPESP), apresentando, para cada etapa, os
 resultados obtidos, as figuras e tabelas correspondentes e a sua interpretação.
 
 **Base de dados.** Boletins físico-químicos e bacteriológicos do SEMAE-Piracicaba
