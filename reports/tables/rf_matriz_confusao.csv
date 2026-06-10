@@ -1,3 +1,3 @@
-,pred_adequada,pred_inadequada
-real_adequada,24,2
-real_inadequada,10,3
+,pred_baixa severidade,pred_alta severidade
+real_baixa severidade,24,2
+real_alta severidade,10,3

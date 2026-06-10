@@ -101,8 +101,10 @@ def main() -> None:
     from models.reports import resumo_markdown
 
     md = resumo_markdown(secoes)
-    (config.REPORTS_DIR / "relatorio_resultados.md").write_text(md, encoding="utf-8")
-    LOG.info("Relatório salvo em reports/relatorio_resultados.md")
+    # Resumo automático em arquivo separado para NÃO sobrescrever o relatório
+    # completo escrito à mão (reports/relatorio_resultados.md).
+    (config.REPORTS_DIR / "relatorio_resultados_auto.md").write_text(md, encoding="utf-8")
+    LOG.info("Resumo automático salvo em reports/relatorio_resultados_auto.md")
     LOG.info("Figuras de avaliação geradas em %s", FIG)
 
     # Monta o relatório final em PDF (projeto §6) a partir das tabelas/figuras.

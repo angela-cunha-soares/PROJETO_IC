@@ -54,10 +54,15 @@ def metricas_classificacao(y_true, y_pred) -> dict[str, float]:
     }
 
 
-def matriz_confusao_df(y_true, y_pred, labels=(0, 1)) -> pd.DataFrame:
-    """Matriz de confusão como ``DataFrame`` rotulado (linhas=real, colunas=predito)."""
+def matriz_confusao_df(y_true, y_pred, labels=(0, 1), nomes=None) -> pd.DataFrame:
+    """Matriz de confusão como ``DataFrame`` rotulado (linhas=real, colunas=predito).
+
+    ``nomes`` define os rótulos das classes (na ordem de ``labels``). Se ``None``,
+    usa ``["adequada", "inadequada"]`` para o caso binário 0/1.
+    """
     cm = confusion_matrix(y_true, y_pred, labels=list(labels))
-    nomes = ["adequada", "inadequada"] if set(labels) == {0, 1} else [str(x) for x in labels]
+    if nomes is None:
+        nomes = ["adequada", "inadequada"] if set(labels) == {0, 1} else [str(x) for x in labels]
     return pd.DataFrame(
         cm,
         index=[f"real_{n}" for n in nomes],

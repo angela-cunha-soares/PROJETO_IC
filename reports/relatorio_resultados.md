@@ -295,14 +295,21 @@ separação.
 | Cianobactérias (cel/mL) | **20.799** | 7.873 |
 | CLOROFILA (µg/L) | **81,2** | 25,3 |
 
-**Interpretação.** O K-Means separa dois **regimes de qualidade**:
-- **Cluster 0 (22%)** — água **mineralizada e eutrofizada**: alta condutividade,
-  alcalinidade, dureza, cloreto, clorofila e cianobactérias, com **baixa turbidez**.
-  Compatível com **período seco** (concentração de solutos, floração de algas).
-- **Cluster 1 (78%)** — água **turva e diluída**: alta turbidez e cor, baixa
-  condutividade. Compatível com **período chuvoso** (erosão eleva a turbidez; a chuva
-  dilui os íons). Útil ao manejo: o regime turvo exige filtragem; o eutrofizado, atenção
-  a algas/cianotoxinas e a entupimento biológico de emissores.
+**Interpretação.** O K-Means separa dois **regimes de qualidade** pelo eixo
+mineralização × turbidez:
+- **Cluster 0 (22%, n=42)** — água **mineralizada e eutrofizada**: alta condutividade
+  (548 µS/cm), alcalinidade, dureza, cloreto, clorofila e cianobactérias, com **baixa
+  turbidez** (20,8 FTU). É **mais frequente no período seco** (64% das suas amostras),
+  quando há concentração de solutos e floração de algas.
+- **Cluster 1 (78%, n=150)** — água **turva e diluída**: alta turbidez (75,3 FTU) e cor,
+  baixa condutividade (265 µS/cm); distribui-se quase igualmente entre as estações
+  (54% úmida, 46% seca).
+
+A associação com a sazonalidade é **moderada, não determinística** — ambos os regimes
+ocorrem nas duas estações (cluster 0: 64% seca / 36% úmida; cluster 1: 46% / 54%) —,
+mas o contraste mineralização × turbidez é nítido e operacionalmente útil: o regime
+turvo exige filtragem; o eutrofizado pede atenção a algas/cianotoxinas e a entupimento
+biológico de emissores.
 
 ### 3.4.2 Random Forest (classificação)
 

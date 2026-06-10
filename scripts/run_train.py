@@ -78,7 +78,8 @@ def main() -> None:
     if rotulo.nunique() < 2:
         LOG.warning("Rótulo com uma única classe — Random Forest ignorado.")
     else:
-        res_rf = rf.treinar(scaled[feats_rf], rotulo)
+        res_rf = rf.treinar(scaled[feats_rf], rotulo,
+                            nomes_classes=["baixa severidade", "alta severidade"])
         saida["n_violacoes"] = contar_violacoes(imputado).values
         saida["inadequada"] = rotulo_estrito.values
         saida["severidade_alta"] = rotulo.values
