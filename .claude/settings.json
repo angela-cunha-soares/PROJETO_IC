@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python scripts/plot_outliers.py)",
+      "Bash(python -c ' *)",
+      "Bash(python -X utf8 -c ' *)",
+      "Bash(rm -f reports/figures/outliers_*.png)",
+      "Bash(python -X utf8 scripts/plot_outliers.py)",
+      "Bash(python -c \"import missingno; print\\('missingno', missingno.__version__\\)\")",
+      "Bash(python -c \"import matplotlib_venn; print\\('matplotlib_venn', matplotlib_venn.__version__\\)\")",
+      "Bash(python -X utf8 scripts/plot_missing.py)",
+      "Bash(python -X utf8 scripts/comparar_metodos_outliers.py)",
+      "Bash(python -X utf8 scripts/melhor_metodo_por_variavel.py)"
+    ]
+  }
+}

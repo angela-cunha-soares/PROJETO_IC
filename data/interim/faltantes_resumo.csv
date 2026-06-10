@@ -1,0 +1,24 @@
+variavel,pct_nan,skew,decisao
+S.T.(mg/l),99.48,,EXCLUIR
+Surfact.(mg/l),99.48,,EXCLUIR
+DBO(ppm O2),96.35,2.64,EXCLUIR
+P(ppm P),90.62,0.45,EXCLUIR
+N(ppm N),89.06,3.83,EXCLUIR
+Amonia(mg/l),75.52,0.23,EXCLUIR
+C.T.(NMP/100ml),60.94,3.27,EXCLUIR
+C.F.(NMP/100ml),19.79,3.77,KNN
+F(ppm F),18.75,0.63,KNN
+CLOROFILA(ug/l),7.81,6.11,KNN
+Cianobacteria(cel/ml),7.29,3.64,KNN
+ALC.(ppm CaCO3),5.21,1.8,KNN
+AC.(ppm CaCO3),5.21,3.82,KNN
+Mn(mg/l),3.65,2.41,Mediana
+Fe(ppm Fe),3.65,2.67,Mediana
+DUR.(ppm CaCO3),3.65,1.41,Mediana
+Cl-(ppm Cl-),3.65,3.92,Mediana
+O.C.(ppm O2),3.65,2.85,Mediana
+O.D.(ppm O2),2.6,0.18,Média
+Cond.(uS/cm),1.56,1.52,Mediana
+TURB.(FTU),0.52,1.98,Mediana
+pH,0.52,0.64,Média
+COR(ppm Pt Co),0.52,3.43,Mediana

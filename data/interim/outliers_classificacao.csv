@@ -1,0 +1,193 @@
+Ano,Mes,categoria,uni_iqr,uni_mad,multi_voto
+2009,Jan,Só uni,True,True,False
+2009,Fev,Forte,True,True,True
+2009,Mar,Só uni,True,True,False
+2009,Abr,Limpa,False,False,False
+2009,Mai,Limpa,False,False,False
+2009,Jun,Só uni,False,True,False
+2009,Jul,Só uni,True,True,False
+2009,Ago,Só uni,False,True,False
+2009,Set,Limpa,False,False,False
+2009,Out,Só uni,True,True,False
+2009,Nov,Só uni,True,True,False
+2009,Dez,Forte,True,True,True
+2010,Jan,Só uni,True,True,False
+2010,Fev,Só uni,True,True,False
+2010,Mar,Só uni,True,True,False
+2010,Abr,Só uni,True,True,False
+2010,Mai,Limpa,False,False,False
+2010,Jun,Só uni,False,True,False
+2010,Jul,Limpa,False,False,False
+2010,Ago,Limpa,False,False,False
+2010,Set,Limpa,False,False,False
+2010,Out,Limpa,False,False,False
+2010,Nov,Limpa,False,False,False
+2010,Dez,Só uni,True,True,False
+2011,Jan,Forte,True,True,True
+2011,Fev,Só uni,True,True,False
+2011,Mar,Só uni,False,True,False
+2011,Abr,Limpa,False,False,False
+2011,Mai,Limpa,False,False,False
+2011,Jun,Limpa,False,False,False
+2011,Jul,Só uni,False,True,False
+2011,Ago,Limpa,False,False,False
+2011,Set,Limpa,False,False,False
+2011,Out,Só uni,False,True,False
+2011,Nov,Limpa,False,False,False
+2011,Dez,Só uni,False,True,False
+2012,Jan,Só uni,True,True,False
+2012,Fev,Só uni,True,True,False
+2012,Mar,Limpa,False,False,False
+2012,Abr,Limpa,False,False,False
+2012,Mai,Limpa,False,False,False
+2012,Jun,Só uni,False,True,False
+2012,Jul,Limpa,False,False,False
+2012,Ago,Limpa,False,False,False
+2012,Set,Só uni,True,True,False
+2012,Out,Limpa,False,False,False
+2012,Nov,Limpa,False,False,False
+2012,Dez,Limpa,False,False,False
+2013,Jan,Limpa,False,False,False
+2013,Fev,Limpa,False,False,False
+2013,Mar,Limpa,False,False,False
+2013,Abr,Limpa,False,False,False
+2013,Mai,Limpa,False,False,False
+2013,Jun,Limpa,False,False,False
+2013,Jul,Limpa,False,False,False
+2013,Ago,Limpa,False,False,False
+2013,Set,Limpa,False,False,False
+2013,Out,Só uni,False,True,False
+2013,Nov,Só uni,True,True,False
+2013,Dez,Limpa,False,False,False
+2014,Jan,Só uni,True,True,False
+2014,Fev,Só uni,True,True,False
+2014,Mar,Só uni,True,True,False
+2014,Abr,Só uni,True,True,False
+2014,Mai,Só uni,True,True,False
+2014,Jun,Só uni,True,True,False
+2014,Jul,Forte,True,True,True
+2014,Ago,Forte,True,True,True
+2014,Set,Forte,True,True,True
+2014,Out,Forte,True,True,True
+2014,Nov,Forte,True,True,True
+2014,Dez,Só uni,True,True,False
+2015,Jan,Limpa,False,False,False
+2015,Fev,Só uni,True,True,False
+2015,Mar,Só uni,False,True,False
+2015,Abr,Limpa,False,False,False
+2015,Mai,Limpa,False,False,False
+2015,Jun,Limpa,False,False,False
+2015,Jul,Incompleta,False,False,False
+2015,Ago,Só uni,True,True,False
+2015,Set,Só uni,True,True,False
+2015,Out,Só uni,True,True,False
+2015,Nov,Só uni,True,True,False
+2015,Dez,Só uni,True,True,False
+2016,Jan,Só uni,True,True,False
+2016,Fev,Forte,True,True,True
+2016,Mar,Só uni,False,True,False
+2016,Abr,Limpa,False,False,False
+2016,Mai,Limpa,False,False,False
+2016,Jun,Forte,True,True,True
+2016,Jul,Limpa,False,False,False
+2016,Ago,Limpa,False,False,False
+2016,Set,Limpa,False,False,False
+2016,Out,Só uni,True,False,False
+2016,Nov,Forte,True,True,True
+2016,Dez,Limpa,False,False,False
+2017,Jan,Só uni,True,True,False
+2017,Fev,Só uni,True,True,False
+2017,Mar,Limpa,False,False,False
+2017,Abr,Forte,True,True,True
+2017,Mai,Só uni,True,True,False
+2017,Jun,Só uni,True,True,False
+2017,Jul,Limpa,False,False,False
+2017,Ago,Só uni,True,True,False
+2017,Set,Só uni,True,True,False
+2017,Out,Incompleta,False,False,False
+2017,Nov,Só uni,True,True,False
+2017,Dez,Limpa,False,False,False
+2018,Jan,Só uni,True,True,False
+2018,Fev,Só uni,False,True,False
+2018,Mar,Limpa,False,False,False
+2018,Abr,Limpa,False,False,False
+2018,Mai,Limpa,False,False,False
+2018,Jun,Limpa,False,False,False
+2018,Jul,Só uni,True,False,False
+2018,Ago,Só uni,True,False,False
+2018,Set,Só uni,True,True,False
+2018,Out,Só uni,True,True,False
+2018,Nov,Só uni,True,True,False
+2018,Dez,Só uni,True,True,False
+2019,Jan,Só uni,True,True,False
+2019,Fev,Limpa,False,False,False
+2019,Mar,Limpa,False,False,False
+2019,Abr,Limpa,False,False,False
+2019,Mai,Limpa,False,False,False
+2019,Jun,Limpa,False,False,False
+2019,Jul,Limpa,False,False,False
+2019,Ago,Só uni,True,True,False
+2019,Set,Só uni,True,True,False
+2019,Out,Só uni,True,True,False
+2019,Nov,Só uni,True,True,False
+2019,Dez,Só uni,True,True,False
+2020,Jan,Só uni,True,True,False
+2020,Fev,Só uni,True,True,False
+2020,Mar,Limpa,False,False,False
+2020,Abr,Incompleta,False,False,False
+2020,Mai,Incompleta,False,False,False
+2020,Jun,Incompleta,False,False,False
+2020,Jul,Só uni,True,True,False
+2020,Ago,Só uni,True,True,False
+2020,Set,Só uni,True,True,False
+2020,Out,Só uni,True,True,False
+2020,Nov,Só uni,True,False,False
+2020,Dez,Só uni,True,True,False
+2021,Jan,Só uni,False,True,False
+2021,Fev,Só uni,False,True,False
+2021,Mar,Limpa,False,False,False
+2021,Abr,Limpa,False,False,False
+2021,Mai,Limpa,False,False,False
+2021,Jun,Limpa,False,False,False
+2021,Jul,Limpa,False,False,False
+2021,Ago,Limpa,False,False,False
+2021,Set,Só uni,True,False,False
+2021,Out,Só uni,True,False,False
+2021,Nov,Só uni,True,True,False
+2021,Dez,Só uni,True,True,False
+2022,Jan,Só uni,True,True,False
+2022,Fev,Limpa,False,False,False
+2022,Mar,Só uni,True,False,False
+2022,Abr,Só uni,True,True,False
+2022,Mai,Só uni,True,False,False
+2022,Jun,Só uni,True,True,False
+2022,Jul,Só uni,True,True,False
+2022,Ago,Limpa,False,False,False
+2022,Set,Limpa,False,False,False
+2022,Out,Só uni,True,True,False
+2022,Nov,Limpa,False,False,False
+2022,Dez,Só uni,True,True,False
+2023,Jan,Só uni,True,True,False
+2023,Fev,Só uni,True,True,False
+2023,Mar,Só uni,True,True,False
+2023,Abr,Só uni,True,True,False
+2023,Mai,Só uni,True,False,False
+2023,Jun,Limpa,False,False,False
+2023,Jul,Limpa,False,False,False
+2023,Ago,Só uni,True,True,False
+2023,Set,Limpa,False,False,False
+2023,Out,Limpa,False,False,False
+2023,Nov,Limpa,False,False,False
+2023,Dez,Limpa,False,False,False
+2024,Jan,Limpa,False,False,False
+2024,Fev,Limpa,False,False,False
+2024,Mar,Limpa,False,False,False
+2024,Abr,Limpa,False,False,False
+2024,Mai,Limpa,False,False,False
+2024,Jun,Só uni,True,True,False
+2024,Jul,Limpa,False,False,False
+2024,Ago,Só uni,True,True,False
+2024,Set,Só uni,True,False,False
+2024,Out,Limpa,False,False,False
+2024,Nov,Só uni,False,True,False
+2024,Dez,Incompleta,False,False,False
