@@ -118,10 +118,10 @@ SEMAE (2009-2024)
 **Como implementar.**
 ```python
 import pandas as pd
-from projeto_pcj.data.load import load_semae
-from projeto_pcj.data.schema import SCHEMA
+from projeto_pcj.load import load_semae
+from projeto_pcj.schema import SCHEMA
 
-df = load_semae("data/raw/semae_2009_2024.csv")  # parser e tipagem padronizados
+df = load_semae()  # lê data/interim/dados_organizados.csv; parser e tipagem padronizados
 df.info()
 df.describe().T
 ```
@@ -286,13 +286,32 @@ Gera as figuras e tabelas finais (em `reports/figures/` e `reports/tables/`), ex
 
 ## 5. Como rodar
 
-```bash
-# Pipeline completo via scripts
-python scripts/run_preprocess.py --input data/raw/semae_2009_2024.csv --output data/processed/
-python scripts/run_train.py --data data/processed/ --out models/
-python scripts/run_evaluate.py --models models/ --report reports/
+Os scripts leem os caminhos de `src/config.py` (não recebem argumentos). Ordem recomendada:
 
-# Ou interativamente, executando os notebooks em ordem
+```bash
+# 0. Extração do PDF SEMAE → data/interim/dados_organizados.csv (rodar uma vez)
+python scripts/extrair_dados.py
+
+# 1. Pipeline de ML (pré-processamento → modelagem → avaliação)
+python scripts/run_preprocess.py   # imputação (+ validação por silhueta do K-Means) + padronização
+python scripts/run_train.py        # K-Means, Random Forest, Isolation Forest → models/, reports/tables/
+python scripts/run_evaluate.py     # métricas + figuras eval_*.png + relatorio_resultados.md + relatorio_final.pdf
+
+# 2. Análise de outliers completa (6 passos encadeados)
+python scripts/run_outliers.py             # roda tudo
+python scripts/run_outliers.py --list      # lista os passos
+python scripts/run_outliers.py --only 4 5 6  # só tabelas + figuras novas
+
+# 3. Relatório final em PDF (também gerado automaticamente por run_evaluate.py)
+python scripts/gerar_relatorio_pdf.py   # → reports/relatorio_final.pdf
+
+# 4. (Re)gerar os notebooks 00–10 a partir de src/
+python scripts/gerar_notebooks.py
+
+# 5. Testes
+pytest
+
+# Ou, interativamente, executar os notebooks em ordem
 jupyter lab notebooks/
 ```
 

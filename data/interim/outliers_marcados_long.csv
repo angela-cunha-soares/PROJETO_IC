@@ -1,0 +1,141 @@
+Ano,Mes,metodo,variavel_mais_extrema,valor_original,z_score,n_metodos,n_violacoes_conama
+2009,Dez,IQR,Fe(ppm Fe),14.74,6.4,6,6
+2009,Dez,MAD,Fe(ppm Fe),14.74,6.4,6,6
+2009,Dez,IForest,Fe(ppm Fe),14.74,6.4,6,6
+2009,Dez,LOF,Fe(ppm Fe),14.74,6.4,6,6
+2009,Dez,KNN,Fe(ppm Fe),14.74,6.4,6,6
+2009,Dez,Ensemble,Fe(ppm Fe),14.74,6.4,6,6
+2009,Fev,IQR,COR(ppm Pt Co),868.0,6.64,6,6
+2009,Fev,MAD,COR(ppm Pt Co),868.0,6.64,6,6
+2009,Fev,IForest,COR(ppm Pt Co),868.0,6.64,6,6
+2009,Fev,LOF,COR(ppm Pt Co),868.0,6.64,6,6
+2009,Fev,KNN,COR(ppm Pt Co),868.0,6.64,6,6
+2009,Fev,Ensemble,COR(ppm Pt Co),868.0,6.64,6,6
+2014,Ago,IQR,O.C.(ppm O2),27.9,6.63,6,5
+2014,Ago,MAD,O.C.(ppm O2),27.9,6.63,6,5
+2014,Ago,IForest,O.C.(ppm O2),27.9,6.63,6,5
+2014,Ago,LOF,O.C.(ppm O2),27.9,6.63,6,5
+2014,Ago,KNN,O.C.(ppm O2),27.9,6.63,6,5
+2014,Ago,Ensemble,O.C.(ppm O2),27.9,6.63,6,5
+2014,Jul,IQR,Cl-(ppm Cl-),131.0,3.2,6,5
+2014,Jul,MAD,Cl-(ppm Cl-),131.0,3.2,6,5
+2014,Jul,IForest,Cl-(ppm Cl-),131.0,3.2,6,5
+2014,Jul,LOF,Cl-(ppm Cl-),131.0,3.2,6,5
+2014,Jul,KNN,Cl-(ppm Cl-),131.0,3.2,6,5
+2014,Jul,Ensemble,Cl-(ppm Cl-),131.0,3.2,6,5
+2014,Nov,IQR,Cl-(ppm Cl-),215.0,6.31,6,6
+2014,Nov,MAD,Cl-(ppm Cl-),215.0,6.31,6,6
+2014,Nov,IForest,Cl-(ppm Cl-),215.0,6.31,6,6
+2014,Nov,LOF,Cl-(ppm Cl-),215.0,6.31,6,6
+2014,Nov,KNN,Cl-(ppm Cl-),215.0,6.31,6,6
+2014,Nov,Ensemble,Cl-(ppm Cl-),215.0,6.31,6,6
+2014,Out,IQR,Cl-(ppm Cl-),233.0,6.98,6,6
+2014,Out,MAD,Cl-(ppm Cl-),233.0,6.98,6,6
+2014,Out,IForest,Cl-(ppm Cl-),233.0,6.98,6,6
+2014,Out,LOF,Cl-(ppm Cl-),233.0,6.98,6,6
+2014,Out,KNN,Cl-(ppm Cl-),233.0,6.98,6,6
+2014,Out,Ensemble,Cl-(ppm Cl-),233.0,6.98,6,6
+2014,Set,IQR,O.C.(ppm O2),22.2,4.68,6,6
+2014,Set,MAD,O.C.(ppm O2),22.2,4.68,6,6
+2014,Set,IForest,O.C.(ppm O2),22.2,4.68,6,6
+2014,Set,LOF,O.C.(ppm O2),22.2,4.68,6,6
+2014,Set,KNN,O.C.(ppm O2),22.2,4.68,6,6
+2014,Set,Ensemble,O.C.(ppm O2),22.2,4.68,6,6
+2016,Fev,IQR,DUR.(ppm CaCO3),148.0,5.33,6,5
+2016,Fev,MAD,DUR.(ppm CaCO3),148.0,5.33,6,5
+2016,Fev,IForest,DUR.(ppm CaCO3),148.0,5.33,6,5
+2016,Fev,LOF,DUR.(ppm CaCO3),148.0,5.33,6,5
+2016,Fev,KNN,DUR.(ppm CaCO3),148.0,5.33,6,5
+2016,Fev,Ensemble,DUR.(ppm CaCO3),148.0,5.33,6,5
+2016,Jun,IQR,TURB.(FTU),394.0,4.25,6,5
+2016,Jun,MAD,TURB.(FTU),394.0,4.25,6,5
+2016,Jun,IForest,TURB.(FTU),394.0,4.25,6,5
+2016,Jun,LOF,TURB.(FTU),394.0,4.25,6,5
+2016,Jun,KNN,TURB.(FTU),394.0,4.25,6,5
+2016,Jun,Ensemble,TURB.(FTU),394.0,4.25,6,5
+2016,Nov,IQR,Mn(mg/l),0.76,4.66,6,6
+2016,Nov,MAD,Mn(mg/l),0.76,4.66,6,6
+2016,Nov,IForest,Mn(mg/l),0.76,4.66,6,6
+2016,Nov,LOF,Mn(mg/l),0.76,4.66,6,6
+2016,Nov,KNN,Mn(mg/l),0.76,4.66,6,6
+2016,Nov,Ensemble,Mn(mg/l),0.76,4.66,6,6
+2011,Jan,IQR,Fe(ppm Fe),9.55,3.76,5,6
+2011,Jan,MAD,Fe(ppm Fe),9.55,3.76,5,6
+2011,Jan,IForest,Fe(ppm Fe),9.55,3.76,5,6
+2011,Jan,KNN,Fe(ppm Fe),9.55,3.76,5,6
+2011,Jan,Ensemble,Fe(ppm Fe),9.55,3.76,5,6
+2017,Abr,IQR,O.C.(ppm O2),22.2,4.68,5,5
+2017,Abr,MAD,O.C.(ppm O2),22.2,4.68,5,5
+2017,Abr,LOF,O.C.(ppm O2),22.2,4.68,5,5
+2017,Abr,KNN,O.C.(ppm O2),22.2,4.68,5,5
+2017,Abr,Ensemble,O.C.(ppm O2),22.2,4.68,5,5
+2015,Nov,IQR,Mn(mg/l),0.73,4.41,3,7
+2015,Nov,MAD,Mn(mg/l),0.73,4.41,3,7
+2015,Nov,LOF,Mn(mg/l),0.73,4.41,3,7
+2017,Ago,IQR,Mn(mg/l),0.6,3.35,3,3
+2017,Ago,MAD,Mn(mg/l),0.6,3.35,3,3
+2017,Ago,LOF,Mn(mg/l),0.6,3.35,3,3
+2018,Jan,IQR,Mn(mg/l),0.67,3.92,3,4
+2018,Jan,MAD,Mn(mg/l),0.67,3.92,3,4
+2018,Jan,KNN,Mn(mg/l),0.67,3.92,3,4
+2023,Fev,IQR,Mn(mg/l),0.59,3.27,3,5
+2023,Fev,MAD,Mn(mg/l),0.59,3.27,3,5
+2023,Fev,IForest,Mn(mg/l),0.59,3.27,3,5
+2023,Jan,IQR,O.D.(ppm O2),5.7,2.89,3,4
+2023,Jan,MAD,O.D.(ppm O2),5.7,2.89,3,4
+2023,Jan,IForest,O.D.(ppm O2),5.7,2.89,3,4
+2009,Jan,IQR,COR(ppm Pt Co),432.0,2.76,2,6
+2009,Jan,MAD,COR(ppm Pt Co),432.0,2.76,2,6
+2009,Mar,IQR,Fe(ppm Fe),5.83,1.87,2,5
+2009,Mar,MAD,Fe(ppm Fe),5.83,1.87,2,5
+2009,Nov,IQR,TURB.(FTU),219.0,1.99,2,6
+2009,Nov,MAD,TURB.(FTU),219.0,1.99,2,6
+2010,Jan,IQR,Fe(ppm Fe),8.45,3.2,2,6
+2010,Jan,MAD,Fe(ppm Fe),8.45,3.2,2,6
+2010,Mar,IQR,Fe(ppm Fe),7.65,2.79,2,6
+2010,Mar,MAD,Fe(ppm Fe),7.65,2.79,2,6
+2011,Fev,IQR,Fe(ppm Fe),5.71,1.81,2,6
+2011,Fev,MAD,Fe(ppm Fe),5.71,1.81,2,6
+2012,Jan,IQR,COR(ppm Pt Co),492.0,3.29,2,7
+2012,Jan,MAD,COR(ppm Pt Co),492.0,3.29,2,7
+2014,Dez,IQR,Cond.(uS/cm),718.0,2.43,2,6
+2014,Dez,MAD,Cond.(uS/cm),718.0,2.43,2,6
+2014,Fev,IQR,pH,7.9,3.13,2,6
+2014,Fev,MAD,pH,7.9,3.13,2,6
+2014,Mai,IQR,DUR.(ppm CaCO3),113.0,3.34,2,5
+2014,Mai,MAD,DUR.(ppm CaCO3),113.0,3.34,2,5
+2014,Mar,IQR,Mn(mg/l),0.36,1.39,2,5
+2014,Mar,MAD,Mn(mg/l),0.36,1.39,2,5
+2015,Fev,IQR,TURB.(FTU),224.0,2.05,2,6
+2015,Fev,MAD,TURB.(FTU),224.0,2.05,2,6
+2016,Jan,IQR,O.C.(ppm O2),15.9,2.52,2,6
+2016,Jan,MAD,O.C.(ppm O2),15.9,2.52,2,6
+2017,Fev,IQR,Fe(ppm Fe),5.74,1.82,2,5
+2017,Fev,MAD,Fe(ppm Fe),5.74,1.82,2,5
+2017,Nov,IQR,Mn(mg/l),0.58,3.19,2,4
+2017,Nov,MAD,Mn(mg/l),0.58,3.19,2,4
+2017,Set,IQR,Mn(mg/l),0.57,3.1,2,3
+2017,Set,MAD,Mn(mg/l),0.57,3.1,2,3
+2019,Dez,IQR,pH,7.0,-1.81,2,5
+2019,Dez,MAD,pH,7.0,-1.81,2,5
+2019,Nov,IQR,TURB.(FTU),254.0,2.44,2,6
+2019,Nov,MAD,TURB.(FTU),254.0,2.44,2,6
+2020,Dez,IQR,TURB.(FTU),252.0,2.41,2,6
+2020,Dez,MAD,TURB.(FTU),252.0,2.41,2,6
+2020,Fev,IQR,Mn(mg/l),0.53,2.78,2,6
+2020,Fev,MAD,Mn(mg/l),0.53,2.78,2,6
+2010,Fev,MAD,Fe(ppm Fe),5.0,1.44,1,4
+2011,Dez,MAD,TURB.(FTU),202.0,1.77,1,7
+2012,Jun,MAD,TURB.(FTU),177.0,1.44,1,7
+2015,Ago,IQR,pH,7.7,2.03,1,6
+2015,Dez,MAD,TURB.(FTU),175.0,1.42,1,6
+2015,Out,IQR,DUR.(ppm CaCO3),89.0,1.97,1,5
+2016,Out,IQR,Mn(mg/l),0.35,1.31,1,5
+2017,Jan,MAD,TURB.(FTU),210.0,1.87,1,5
+2018,Fev,MAD,Fe(ppm Fe),5.0,1.44,1,5
+2019,Set,IQR,Cl-(ppm Cl-),82.0,1.39,1,4
+2020,Jan,MAD,TURB.(FTU),218.0,1.97,1,6
+2022,Jan,MAD,Fe(ppm Fe),4.8,1.34,1,7
+2022,Mar,IQR,Cl-(ppm Cl-),80.0,1.31,1,5
+2023,Mai,IQR,DUR.(ppm CaCO3),99.0,2.54,1,4
+2024,Set,IQR,pH,7.8,2.58,1,4

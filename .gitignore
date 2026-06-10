@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Artefatos regeneráveis do pipeline (recriados por scripts/run_*.py)
+data/processed/
+models/
+
+# SO / editor
+.DS_Store
+Thumbs.db

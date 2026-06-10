@@ -1,0 +1,13 @@
+data,Ano,Mes,n_metodos,n_violacoes_conama,n_violacoes_sem_indicativos,metodos_que_marcaram,COR(ppm Pt Co),TURB.(FTU),pH,O.C.(ppm O2),O.D.(ppm O2),Cl-(ppm Cl-),DUR.(ppm CaCO3),Fe(ppm Fe),Mn(mg/l),Cond.(uS/cm)
+2009-02-01,2009,Fev,6,6,5,"IQR, MAD, IForest, LOF, KNN, Ensemble",868.0,238.0,7.1,7.2,4.1,21.0,33.0,9.55,0.12,133.0
+2009-12-01,2009,Dez,6,6,5,"IQR, MAD, IForest, LOF, KNN, Ensemble",798.0,401.0,7.1,9.0,4.4,20.0,35.0,14.74,0.16,118.0
+2014-09-01,2014,Set,6,6,5,"IQR, MAD, IForest, LOF, KNN, Ensemble",89.0,30.0,7.9,22.2,1.3,118.0,95.0,1.42,0.37,819.0
+2014-10-01,2014,Out,6,6,5,"IQR, MAD, IForest, LOF, KNN, Ensemble",148.0,26.0,7.9,13.1,2.2,233.0,97.0,1.03,0.18,1098.0
+2014-11-01,2014,Nov,6,6,5,"IQR, MAD, IForest, LOF, KNN, Ensemble",259.0,119.0,7.5,11.6,2.7,215.0,91.0,3.7,0.41,763.0
+2016-11-01,2016,Nov,6,6,5,"IQR, MAD, IForest, LOF, KNN, Ensemble",218.0,371.0,7.4,11.1,3.2,32.0,46.0,4.92,0.76,221.0
+2014-07-01,2014,Jul,6,5,4,"IQR, MAD, IForest, LOF, KNN, Ensemble",75.0,13.0,7.5,12.0,1.4,131.0,92.0,0.7,0.18,786.0
+2014-08-01,2014,Ago,6,5,4,"IQR, MAD, IForest, LOF, KNN, Ensemble",98.0,25.0,7.7,27.9,0.6,117.0,100.0,0.72,0.25,916.0
+2016-02-01,2016,Fev,6,5,4,"IQR, MAD, IForest, LOF, KNN, Ensemble",286.0,167.0,7.5,13.3,5.6,120.0,148.0,4.33,0.32,174.0
+2016-06-01,2016,Jun,6,5,4,"IQR, MAD, IForest, LOF, KNN, Ensemble",270.0,394.0,7.2,9.2,5.5,23.0,40.0,4.9,0.48,132.0
+2011-01-01,2011,Jan,5,6,5,"IQR, MAD, IForest, KNN, Ensemble",422.0,277.0,7.3,9.3,4.3,21.0,36.0,9.55,0.35,106.0
+2017-04-01,2017,Abr,5,5,4,"IQR, MAD, LOF, KNN, Ensemble",75.0,27.0,7.3,22.2,3.1,32.0,44.0,4.08,0.21,208.0

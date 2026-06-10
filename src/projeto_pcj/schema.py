@@ -67,24 +67,33 @@ MISSING_MARKERS: list[str] = ["--", "---", "-", ""]
 # --- Limites regulatórios (CONAMA 357/2005, Classe 2) --------------------------
 # Convenção: tuple (mín, máx). Use ``None`` quando o limite for unilateral ou inexistente.
 # Detalhes e ressalvas em docs/dicionario_de_dados.md.
+#
+# Fonte: Resolução CONAMA nº 357/2005. Os limites próprios da Classe 2 estão no
+# Art. 15 (águas doces); o Art. 15 ainda determina que "aplicam-se às águas doces
+# de classe 2 as condições e padrões da classe 1, à exceção" dos itens listados —
+# por isso os parâmetros não citados no Art. 15 herdam os limites da Classe 1
+# (Art. 14, Tabela I).
+# VERIFICADO valor a valor contra o texto oficial dos Art. 14 e Art. 15 (2026-06-10).
+# Nota: 0,3 (Fe) e 0,1 (Mn) são Classe 1/2; a Classe 3 (Art. 16) é mais permissiva
+# (Fe 5,0; Mn 0,5) e NÃO se aplica aqui.
 
 CONAMA_357_CLASSE2: dict[str, tuple[float | None, float | None]] = {
-    "COR(ppm Pt Co)": (None, 75.0),
-    "TURB.(FTU)": (None, 100.0),
-    "pH": (6.0, 9.0),
-    "DBO(ppm O2)": (None, 5.0),
-    "O.D.(ppm O2)": (5.0, None),
-    "Cl-(ppm Cl-)": (None, 250.0),
-    "Fe(ppm Fe)": (None, 0.3),
-    "Mn(mg/l)": (None, 0.1),
-    # N(ppm N) agrega múltiplas formas; ver dicionario_de_dados.md
-    "P(ppm P)": (None, 0.1),
-    "Amonia(mg/l)": (None, 3.7),  # pH <= 7.5
-    "Surfact.(mg/l)": (None, 0.5),
-    "Cianobacteria(cel/ml)": (None, 50_000.0),
-    "C.F.(NMP/100ml)": (None, 1_000.0),
-    "CLOROFILA(ug/l)": (None, 30.0),
-    "F(ppm F)": (None, 1.4),
+    "COR(ppm Pt Co)": (None, 75.0),       # Art. 15, III — cor verdadeira 75 mg Pt/L
+    "TURB.(FTU)": (None, 100.0),          # Art. 15, IV  — turbidez 100 UNT
+    "pH": (6.0, 9.0),                     # Art. 14, I.m (Classe 1) — pH 6,0 a 9,0
+    "DBO(ppm O2)": (None, 5.0),           # Art. 15, V   — DBO5,20 5 mg/L O2
+    "O.D.(ppm O2)": (5.0, None),          # Art. 15, VI  — OD não inferior a 5 mg/L O2
+    "Cl-(ppm Cl-)": (None, 250.0),        # Art. 14, Tab. I — cloreto total 250 mg/L
+    "Fe(ppm Fe)": (None, 0.3),            # Art. 14, Tab. I — Ferro DISSOLVIDO 0,3 (SEMAE mede total: ressalva)
+    "Mn(mg/l)": (None, 0.1),              # Art. 14, Tab. I — Manganês TOTAL 0,1 (coincide com SEMAE)
+    # N(ppm N) agrega múltiplas formas (Art. 14: nitrato 10; nitrito 1); ver dicionario_de_dados.md
+    "P(ppm P)": (None, 0.1),              # Art. 14, Tab. I — fósforo total lótico 0,1 mg/L (Art. 15 IX só trata lêntico/intermediário)
+    "Amonia(mg/l)": (None, 3.7),          # Art. 14, Tab. I — N-amoniacal 3,7 mg/L N para pH <= 7,5
+    "Surfact.(mg/l)": (None, 0.5),        # Art. 14, Tab. I — substâncias tensoativas (MBAS) 0,5 mg/L LAS
+    "Cianobacteria(cel/ml)": (None, 50_000.0),  # Art. 15, VIII — 50.000 cel/mL
+    "C.F.(NMP/100ml)": (None, 1_000.0),   # Art. 15, II — coliformes termotolerantes 1.000/100 mL
+    "CLOROFILA(ug/l)": (None, 30.0),      # Art. 15, VII — clorofila a 30 µg/L
+    "F(ppm F)": (None, 1.4),              # Art. 14, Tab. I — fluoreto total 1,4 mg/L F
 }
 
 

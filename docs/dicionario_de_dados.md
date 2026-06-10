@@ -36,8 +36,8 @@ Variáveis ordenadas como no CSV. Limites referenciais correspondem à **Resolu�
 | `O.D.(ppm O2)` | Oxigênio Dissolvido | ppm O₂ | mg O₂/L | ≥ 5 | Cair abaixo de 5 indica déficit (eutrofização, lançamento orgânico). |
 | `Cl-(ppm Cl-)` | Cloreto | ppm Cl⁻ | mg Cl⁻/L | ≤ 250 | Indicador de salinidade; relevante para tolerância de cultivos. |
 | `DUR.(ppm CaCO3)` | Dureza total (Ca²⁺ + Mg²⁺) | ppm CaCO₃ | mg CaCO₃/L | — (não normatizado) | Risco de incrustação em sistemas de irrigação. |
-| `Fe(ppm Fe)` | Ferro total | ppm Fe | mg Fe/L | ≤ 0,3 (dissolvido) | Em irrigação localizada, > 0,2 mg/L já obstrui emissores. |
-| `Mn(mg/l)` | Manganês total | mg/L | mg/L | ≤ 0,1 (dissolvido) | Bioacumulação; reage com Fe formando precipitados. |
+| `Fe(ppm Fe)` | Ferro total | ppm Fe | mg Fe/L | ≤ 0,3 (**dissolvido**) | A norma limita o Fe **dissolvido**, mas o SEMAE mede Fe **total** → comparar total contra o limite de dissolvido superestima violações. Em irrigação localizada, > 0,2 mg/L já obstrui emissores. |
+| `Mn(mg/l)` | Manganês total | mg/L | mg/L | ≤ 0,1 (**total**) | O padrão CONAMA é "Manganês **total**" — coincide com a medição do SEMAE (sem problema de fração). Bioacumulação; reage com Fe formando precipitados. |
 | `N(ppm N)` | Nitrogênio (forma total/Kjeldahl — verificar com SEMAE) | ppm N | mg N/L | NO₃⁻ ≤ 10; NO₂⁻ ≤ 1; N_amon. ≤ 3,7 (pH ≤ 7,5) | A coluna não distingue forma química; tratar como nitrogênio total agregado. Muito esparsa antes de 2018. |
 | `P(ppm P)` | Fósforo total | ppm P | mg P/L | ≤ 0,1 (lóticos) | Indicador-chave de eutrofização. Muito esparso antes de 2018. |
 | `Cond.(uS/cm)` | Condutividade elétrica | µS/cm | µS/cm | — (não normatizado) | Indicador integrado de sais dissolvidos; principal critério FAO 29 para irrigação. **No PDF aparece como `s/cm` (2009-2010, 2012-2024) ou `us/cm` (2011); o "µ" foi perdido na geração do PDF.** |
