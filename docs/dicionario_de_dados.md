@@ -5,7 +5,8 @@ Descreve as colunas do arquivo `data/interim/dados_organizados.csv`, gerado por
 [`data/raw/data_copy.pdf`](../data/raw/data_copy.pdf) (SEMAE-Piracicaba, série 2009–2024).
 
 Cada linha do CSV representa **uma estatística** (`Mín.`, `Méd.` ou `Máx.`) de **um agregado mensal**
-(`Jan`…`Dez`) ou **anual** (`Ano`) de **um ano** específico. Há 624 linhas: 16 anos × 13 grupos × 3 estatísticas.
+(`Jan`…`Dez`) de **um ano** específico. Há **576 linhas**: 16 anos × 12 meses × 3 estatísticas.
+As linhas de **resumo anual** (`Mes == "Ano"`) foram **removidas** — não são usadas na modelagem.
 
 ---
 
@@ -14,7 +15,7 @@ Cada linha do CSV representa **uma estatística** (`Mín.`, `Méd.` ou `Máx.`) 
 | Coluna | Tipo | Domínio | Descrição |
 |---|---|---|---|
 | `Ano`  | int  | 2009–2024 | Ano de referência da página do PDF. |
-| `Mes`  | str  | `Jan`, `Fev`, …, `Dez`, `Ano` | Agregado mensal ou resumo anual. `Ano` indica a linha de resumo do ano inteiro. |
+| `Mes`  | str  | `Jan`, `Fev`, …, `Dez` | Agregado mensal. As linhas de resumo anual (`Ano`) foram removidas do CSV. |
 | `Calc` | str  | `Mín.`, `Méd.`, `Máx.` | Estatística agregada (mínimo, média, máximo) no período. |
 
 ---

@@ -152,7 +152,7 @@ artificialmente altas. **Regra:** variável usada na regra de rotulagem **não p
 | Modelo | Hiperparâmetros iniciais | Justificativa |
 |---|---|---|
 | K-Means | `n_clusters=2..10`, `n_init="auto"`, `random_state=42` | Cotovelo + silhueta (Rousseeuw 1987; Kaufman & Rousseeuw 1990). Silhueta > 0,5 = clusters efetivos. |
-| Random Forest | `n_estimators=100`, `max_depth=10`, `random_state=42`, `n_jobs=-1`, `cv=5` | Padrão Biau & Scornet 2016; `max_depth=10` limita overfit em base pequena (624 linhas). |
+| Random Forest | `n_estimators=100`, `max_depth=10`, `random_state=42`, `n_jobs=-1`, `cv=5` | Padrão Biau & Scornet 2016; `max_depth=10` limita overfit em base pequena (192 linhas de modelagem). |
 | Isolation Forest | `contamination=0,07`, `n_estimators=200`, `random_state=42` | Faixa 0,05-0,1 citada em Liu et al. 2008 — vide ADR-007. |
 | Local Outlier Factor | `contamination=0,07`, `novelty=True` | Compatibilidade com ensemble. |
 | PyOD KNN | `contamination=0,07` | Idem. |
@@ -168,7 +168,8 @@ reportar média ± desvio das métricas (em [`notebooks/09_validacao_consolidada
 
 **Status:** Provisório — calibrar contra eventos conhecidos.
 **Contexto.** `contamination` é o **percentual prévio assumido de anomalias** na base.
-Fixar em 0,07 implica supor que ~7% dos pontos são anômalos — equivalente a ~44 das 624 linhas.
+Fixar em 0,07 implica supor que ~7% dos pontos são anômalos — equivalente a ~13 das 192 linhas mensais
+de modelagem (≈13 das 180 da camada multivariada complete-case).
 
 **Decisão preliminar.** Manter 0,07 como ponto de partida (centro da faixa 0,05-0,1 do projeto FAPESP),
 mas **calibrar** em [`notebooks/05_outliers_iqr_vs_ensemble.ipynb`](../notebooks/05_outliers_iqr_vs_ensemble.ipynb):
@@ -201,5 +202,6 @@ máquinas diferentes partam do **mesmo PDF**.
 |---|---|---|
 | `data/raw/data_copy.pdf` | `f95d56080379d99d3b263de8fb5389abede56c8f89bb4e55276364c4c7173aa2` | 2026-05-13 |
 | `data/interim/dados_organizados.csv` | `f35921ac4c89b780bbd212b78fb4fe6c8ab75efb32eaa13381126f8ed7c8e460` | 2026-05-13 |
+| `data/interim/dados_organizados.csv` (sem linhas "Ano", 576 linhas) | `42b6b860e64b75710b805589c5299065605e8ab455c7be23a651d46cac70515f` | 2026-06-10 |
 
 **Consequências.** Reprodutibilidade verificável sem versionar dados sensíveis.

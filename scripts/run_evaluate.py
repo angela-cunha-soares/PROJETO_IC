@@ -115,9 +115,22 @@ def main() -> None:
         cwd=config.PROJECT_ROOT,
     )
     if res.returncode == 0:
-        LOG.info("Relatório PDF gerado em reports/relatorio_final.pdf")
+        LOG.info("Relatório PDF (auto) gerado em reports/relatorio_final.pdf")
     else:
-        LOG.warning("Falha ao gerar o PDF (código %d)", res.returncode)
+        LOG.warning("Falha ao gerar o PDF auto (código %d)", res.returncode)
+
+    # Converte o relatório completo (Markdown, escrito à mão) em PDF, se existir.
+    md_completo = config.REPORTS_DIR / "relatorio_resultados.md"
+    if md_completo.is_file():
+        res2 = subprocess.run(
+            [sys.executable, str(Path(__file__).with_name("relatorio_md_para_pdf.py"))],
+            cwd=config.PROJECT_ROOT,
+        )
+        if res2.returncode == 0:
+            LOG.info("Relatório completo em PDF: reports/relatorio_resultados.pdf")
+        else:
+            LOG.warning("Falha ao converter o relatório completo (código %d)",
+                        res2.returncode)
 
 
 if __name__ == "__main__":

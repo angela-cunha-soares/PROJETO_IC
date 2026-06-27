@@ -2,7 +2,8 @@
 
 O PDF de entrada (data/raw/data_copy.pdf) tem 16 páginas, uma por ano (2009-2024).
 Em cada página há uma tabela com 22-23 variáveis físico-químicas/bacteriológicas,
-três linhas por mês (Mín./Méd./Máx.) e três linhas de resumo anual.
+três linhas por mês (Mín./Méd./Máx.). As linhas de resumo anual ("Ano") são
+descartadas — não são usadas na modelagem.
 
 Particularidades tratadas:
     * 2011 reordena colunas e troca alguns rótulos (P ppm P, F- ppm F-, Cond. us/cm,
@@ -174,6 +175,9 @@ def _processar_pagina(page) -> list[list[str]]:
         stat = _stat(row[1] if len(row) > 1 else None)
         if not stat or not mes_atual:
             # Linha que não é Mín./Méd./Máx. (cabeçalho-fantasma, separador etc.)
+            continue
+        if mes_atual == "Ano":
+            # Linhas de resumo anual são descartadas — não são usadas na modelagem.
             continue
 
         linha_out: list[str] = [ano, mes_atual, stat]

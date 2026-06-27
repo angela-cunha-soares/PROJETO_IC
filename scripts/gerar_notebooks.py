@@ -16,7 +16,13 @@ NB_DIR = PROJECT_ROOT / "notebooks"
 BOOT = (
     "import sys\n"
     "from pathlib import Path\n"
-    "sys.path.insert(0, str(Path.cwd().parent / 'src'))\n"
+    "# Localiza a raiz do projeto (que contém src/projeto_pcj), seja qual for o cwd\n"
+    "# (VSCode roda com cwd=raiz; Jupyter clássico, com cwd=notebooks/).\n"
+    "_p = Path.cwd()\n"
+    "for _cand in [_p, *_p.parents]:\n"
+    "    if (_cand / 'src' / 'projeto_pcj').is_dir():\n"
+    "        sys.path.insert(0, str(_cand / 'src'))\n"
+    "        break\n"
     "import matplotlib.pyplot as plt"
 )
 
@@ -179,7 +185,7 @@ NOTEBOOKS: list[tuple[str, list[dict]]] = [
              "def ler(n):\n"
              "    p = config.TABLES_DIR / n\n"
              "    return pd.read_csv(p) if p.is_file() else None\n"
-             "print('Rode antes: run_preprocess.py → run_train.py → run_evaluate.py')"),
+             "print('Rode antes: run_preprocess.py -> run_train.py -> run_evaluate.py')"),
         code("ler('kmeans_varredura.csv')"),
         code("ler('rf_metricas.csv')"),
         code("ler('rf_importancias.csv')"),

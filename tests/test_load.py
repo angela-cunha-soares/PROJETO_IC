@@ -29,8 +29,10 @@ def test_parse_marcadores_ausencia():
 
 
 def test_load_estrutura(df_semae):
-    # 16 anos × 13 grupos (12 meses + Ano) × 3 estatísticas = 624
-    assert len(df_semae) == 624
+    # 16 anos × 12 meses × 3 estatísticas (Mín./Méd./Máx.) = 576
+    # (as linhas de resumo anual "Ano" foram removidas — não são usadas)
+    assert len(df_semae) == 576
+    assert "Ano" not in df_semae["Mes"].unique()
     assert {"Ano", "Mes", "Calc"}.issubset(df_semae.columns)
     for col in FEATURES:
         assert col in df_semae.columns

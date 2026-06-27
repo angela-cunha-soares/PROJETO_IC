@@ -302,8 +302,10 @@ python scripts/run_outliers.py             # roda tudo
 python scripts/run_outliers.py --list      # lista os passos
 python scripts/run_outliers.py --only 4 5 6  # só tabelas + figuras novas
 
-# 3. Relatório final em PDF (também gerado automaticamente por run_evaluate.py)
-python scripts/gerar_relatorio_pdf.py   # → reports/relatorio_final.pdf
+# 3. Relatórios em PDF (ambos também gerados automaticamente por run_evaluate.py)
+python scripts/gerar_relatorio_pdf.py     # resumo auto (tabelas+figuras) → reports/relatorio_final.pdf
+python scripts/relatorio_md_para_pdf.py   # relatório COMPLETO (texto+figuras+tabelas)
+                                          #   converte reports/relatorio_resultados.md → reports/relatorio_resultados.pdf
 
 # 4. (Re)gerar os notebooks 00–10 a partir de src/
 python scripts/gerar_notebooks.py
