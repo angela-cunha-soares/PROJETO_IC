@@ -1,0 +1,17 @@
+variavel,melhor_nrmse,melhor_mae,metodo_regra,nrmse_aplicado,mae_aplicado,regra_confirma_mae
+AC.(ppm CaCO3),media,mediana,knn,0.8919,5.0404,False
+ALC.(ppm CaCO3),knn,knn,knn,0.5923,10.9456,True
+C.F.(NMP/100ml),media,mediana,knn,1.0274,28067.135,False
+CLOROFILA(ug/l),knn,knn,knn,1.0018,23.8157,True
+COR(ppm Pt Co),knn,knn,mediana,1.037,68.7156,False
+Cianobacteria(cel/ml),knn,knn,knn,0.7473,7304.6305,True
+Cl-(ppm Cl-),knn,knn,mediana,0.9702,15.3334,False
+Cond.(uS/cm),knn,knn,mediana,1.0298,118.3856,False
+DUR.(ppm CaCO3),knn,knn,mediana,1.008,13.3231,False
+F(ppm F),knn,knn,knn,0.8549,0.0833,True
+Fe(ppm Fe),knn,knn,mediana,0.9667,1.1756,False
+Mn(mg/l),knn,mediana,mediana,0.9724,0.0727,True
+O.C.(ppm O2),knn,knn,mediana,1.0324,1.9653,False
+O.D.(ppm O2),knn,knn,media,1.0133,0.7133,False
+TURB.(FTU),knn,knn,mediana,0.9974,47.1686,False
+pH,knn,knn,media,0.9428,0.1388,False

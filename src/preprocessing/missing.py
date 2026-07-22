@@ -270,4 +270,120 @@ def little_mcar_test(df: pd.DataFrame, features: list[str]) -> dict[str, float]:
 __all__ = [
     "PlanoImputacao", "resumo_faltantes", "planejar_imputacao",
     "imputar", "validar_imputacao", "impacto_kmeans", "little_mcar_test",
+    "benchmark_imputacao",
 ]
+
+
+def _erro_coluna(verdadeiro: np.ndarray, imputado: np.ndarray) -> tuple[float, float]:
+    """RMSE e MAE entre valores verdadeiros e imputados de uma coluna."""
+    d = imputado - verdadeiro
+    rmse = float(np.sqrt(np.mean(d ** 2)))
+    mae = float(np.mean(np.abs(d)))
+    return rmse, mae
+
+
+def benchmark_imputacao(
+    df: pd.DataFrame,
+    features: list[str],
+    *,
+    metodos: tuple[str, ...] = ("media", "mediana", "knn"),
+    frac_mascara: float = 0.15,
+    n_repeticoes: int = 30,
+    random_state: int | None = None,
+) -> pd.DataFrame:
+    """Valida a imputação por mascaramento (hold-out) das células observadas.
+
+    Como não há verdade externa, esconde-se uma fração MCAR das células que
+    de fato foram medidas, imputa-se por cada método e mede-se o erro apenas
+    nessas células mascaradas — cujo valor verdadeiro conhecemos. Repete-se
+    ``n_repeticoes`` vezes (Monte Carlo) e reporta-se a média. As **mesmas
+    máscaras** são usadas por todos os métodos em cada repetição (comparação
+    pareada e justa).
+
+    Parameters
+    ----------
+    df, features
+        Base e lista de variáveis a avaliar (normalmente as mantidas pela
+        regra dos 30%).
+    metodos
+        Subconjunto de ``{"media", "mediana", "knn"}``.
+    frac_mascara
+        Fração das células observadas a esconder por repetição (padrão 15%).
+    n_repeticoes
+        Número de repetições Monte Carlo.
+
+    Returns
+    -------
+    DataFrame
+        Colunas ``variavel``, ``metodo``, ``rmse``, ``rmse_dp``, ``mae``,
+        ``nrmse`` (RMSE ÷ desvio da variável) e ``n_rep``. O ``nrmse`` permite
+        comparar variáveis de escalas diferentes; menor é melhor.
+    """
+    rng = np.random.default_rng(
+        config.RANDOM_STATE if random_state is None else random_state
+    )
+    feats = [c for c in features if c in df.columns]
+    M = df[feats].to_numpy(dtype=float)
+    obs = ~np.isnan(M)                       # células realmente medidas
+    stds = np.nanstd(M, axis=0)              # escala de cada variável
+    n_cols = M.shape[1]
+
+    acc = {m: {c: {"rmse": [], "mae": []} for c in feats} for m in metodos}
+
+    for _ in range(n_repeticoes):
+        mask = obs & (rng.random(M.shape) < frac_mascara)
+        if not mask.any():
+            continue
+        Mm = M.copy()
+        Mm[mask] = np.nan
+
+        for metodo in metodos:
+            if metodo in ("media", "mediana"):
+                imp = Mm.copy()
+                for j in range(n_cols):
+                    col = Mm[:, j]
+                    if metodo == "media":
+                        val = np.nanmean(col)
+                    else:
+                        val = np.nanmedian(col)
+                    imp[np.isnan(col), j] = val
+            elif metodo == "knn":
+                mu = np.nanmean(Mm, axis=0)
+                sd = np.nanstd(Mm, axis=0)
+                sd[sd == 0] = 1.0
+                Z = (Mm - mu) / sd
+                Zi = KNNImputer(
+                    n_neighbors=config.KNN_N_NEIGHBORS, weights=config.KNN_WEIGHTS
+                ).fit_transform(Z)
+                imp = Zi * sd + mu
+            else:  # pragma: no cover - método desconhecido
+                continue
+
+            for j, c in enumerate(feats):
+                mcol = mask[:, j]
+                if mcol.any():
+                    rmse, mae = _erro_coluna(M[mcol, j], imp[mcol, j])
+                    acc[metodo][c]["rmse"].append(rmse)
+                    acc[metodo][c]["mae"].append(mae)
+
+    linhas = []
+    for j, c in enumerate(feats):
+        for metodo in metodos:
+            rs = acc[metodo][c]["rmse"]
+            as_ = acc[metodo][c]["mae"]
+            if not rs:
+                continue
+            rmse = float(np.mean(rs))
+            nrmse = rmse / stds[j] if stds[j] else float("nan")
+            linhas.append(
+                {
+                    "variavel": c,
+                    "metodo": metodo,
+                    "rmse": round(rmse, 4),
+                    "rmse_dp": round(float(np.std(rs)), 4),
+                    "mae": round(float(np.mean(as_)), 4),
+                    "nrmse": round(nrmse, 4),
+                    "n_rep": len(rs),
+                }
+            )
+    return pd.DataFrame(linhas)

@@ -1,0 +1,24 @@
+variavel,pct_faltante,skew,metodo_regra,faixa
+S.T.(mg/l),99.48,,EXCLUIR,> 30% (excluída)
+Surfact.(mg/l),99.48,,EXCLUIR,> 30% (excluída)
+DBO(ppm O2),96.35,2.64,EXCLUIR,> 30% (excluída)
+P(ppm P),90.62,0.45,EXCLUIR,> 30% (excluída)
+N(ppm N),89.06,3.83,EXCLUIR,> 30% (excluída)
+Amonia(mg/l),75.52,0.23,EXCLUIR,> 30% (excluída)
+C.T.(NMP/100ml),60.94,3.27,EXCLUIR,> 30% (excluída)
+C.F.(NMP/100ml),19.79,3.77,KNN,5% – 30%
+F(ppm F),18.75,0.63,KNN,5% – 30%
+CLOROFILA(ug/l),7.81,6.11,KNN,5% – 30%
+Cianobacteria(cel/ml),7.29,3.64,KNN,5% – 30%
+AC.(ppm CaCO3),5.21,3.82,KNN,5% – 30%
+ALC.(ppm CaCO3),5.21,1.8,KNN,5% – 30%
+DUR.(ppm CaCO3),3.65,1.41,Mediana,< 5%
+O.C.(ppm O2),3.65,2.85,Mediana,< 5%
+Fe(ppm Fe),3.65,2.67,Mediana,< 5%
+Mn(mg/l),3.65,2.41,Mediana,< 5%
+Cl-(ppm Cl-),3.65,3.92,Mediana,< 5%
+O.D.(ppm O2),2.6,0.18,Média,< 5%
+Cond.(uS/cm),1.56,1.52,Mediana,< 5%
+TURB.(FTU),0.52,1.98,Mediana,< 5%
+pH,0.52,0.64,Média,< 5%
+COR(ppm Pt Co),0.52,3.43,Mediana,< 5%

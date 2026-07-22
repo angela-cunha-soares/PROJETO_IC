@@ -1,7 +1,6 @@
 # Aplicação de Machine Learning para Análise da Qualidade da Água na Bacia do PCJ
 
 Projeto de Iniciação Científica (FAPESP) — ESALQ/USP
-Aluno: Guilherme Gramuglia Betta · Orientadora: Profa. Dra. Patrícia Angélica Alves Marques
 Parcerias: CENA-USP, C4AI · Dados: SEMAE Piracicaba (2009–2024)
 
 ---
@@ -33,7 +32,7 @@ Organizar e analisar uma base histórica de qualidade de água do rio Piracicaba
 ```bash
 # Clonar o repositório
 git clone https://github.com/angela-cunha-soares/PROJETO_IC.git
-cd projeto-pcj-ml
+cd PROJETO_IC
 
 # Criar e ativar ambiente virtual
 python -m venv .venv
@@ -44,12 +43,9 @@ source .venv/bin/activate
 
 # Instalar dependências
 pip install -r requirements.txt
-# (opcional, para desenvolvimento)
-pip install -r requirements-dev.txt
-pre-commit install
 ```
 
-`requirements.txt` mínimo:
+`requirements.txt`:
 
 ```
 pandas>=2.2
@@ -57,27 +53,30 @@ numpy>=1.26
 scikit-learn>=1.5
 scipy>=1.13
 matplotlib>=3.8
+matplotlib-venn>=1.1
 seaborn>=0.13
 pyod>=2.0
 joblib>=1.4
 jupyterlab>=4.2
 ipykernel>=6.29
 missingno>=0.5
+pdfplumber>=0.11
+python-docx>=1.1
 ```
 
 ---
 
 ## 2. Estrutura do repositório
 
-Veja `resumo_em_camadas.md` (seção 1) ou a árvore (abaixo). Notebooks numerados em `notebooks/` reproduzem o pipeline; o código reutilizável vive em `src/projeto_pcj/`.
+Notebooks numerados em `notebooks/` reproduzem o pipeline; o código reutilizável vive em `src/`.
 
 ```
-projeto-pcj-ml/
-├── data/           # raw, interim, processed, external (não versionado)
+PROJETO_IC/
+├── data/           # raw, interim, processed, external
 ├── notebooks/      # 00..10 — passo a passo executável
-├── src/projeto_pcj # módulos Python (data, preprocessing, features, models, evaluation)
+├── src/            # módulos Python (projeto_pcj, preprocessing, features, models, visualization)
 ├── tests/          # testes pytest
-├── reports/        # figuras, tabelas, PDFs
+├── reports/        # figuras, tabelas, PDFs e o relatório final em Word
 ├── docs/           # metodologia, dicionário, ADRs
 └── scripts/        # pipelines de linha de comando
 ```
@@ -102,7 +101,7 @@ SEMAE (2009-2024)
 [7] Validação (silhueta, F1, matriz de confusão)
    │
    ▼
-[8] Relatório final + figuras
+[8] Relatório final (Word/PDF) + figuras
 ```
 
 ---
@@ -112,8 +111,6 @@ SEMAE (2009-2024)
 ### Etapa 1 — Carga e inspeção (`notebooks/01_carga_e_inspecao.ipynb`)
 
 **Objetivo.** Carregar a base SEMAE, padronizar nomes de colunas e unidades, e gerar dicionário de variáveis.
-
-**Variáveis esperadas (21):** Cor (ppm Pt Co), Turbidez (FTU), pH, Alcalinidade (ppm CaCO3), Acidez (ppm CaCO3), O.C. (ppm O2), DBO (ppm O2), Oxigênio Dissolvido (ppm O2), Cl⁻ (ppm Cl⁻), Dureza (ppm CaCO3), Fe (ppm Fe), Mn (mg/L), N (ppm N), P (ppm P), Condutividade Elétrica (µS/cm), Surfactantes (mg/L), Cianobactérias (céls/mL), Coliformes Totais (NMP/100 mL), Coliformes Fecais (NMP/100 mL), Clorofila (µg/L), F (ppm F).
 
 **Como implementar.**
 ```python
@@ -129,193 +126,115 @@ df.describe().T
 **Checklist.**
 - Tipagem correta (datas como `datetime64`, numéricos como `float64`).
 - Mapa de unidades publicado em `docs/dicionario_de_dados.md`.
-- Verificação de duplicatas e de pontos de coleta (se houver).
 
 ---
 
 ### Etapa 2 — Pré-processamento (`notebooks/02_pre_processamento.ipynb`)
 
-**Análise de faltantes.**
-```python
-import missingno as msno
-msno.matrix(df)
-faltantes = df.isna().mean().sort_values(ascending=False)
-```
-
-**Suposição declarada no projeto.** MCAR (Missing Completely At Random), seguindo Lepot et al. (2017). **Recomendação:** testar a hipótese com o teste de Little (`statsmodels` ou `pingouin`) e fazer análise de sensibilidade.
+**Suposição declarada no projeto.** MCAR (Missing Completely At Random). O pipeline aplica o teste de Little (implementado em `src/preprocessing/missing.py`) para criticar a hipótese.
 
 **Regras de decisão (do projeto):**
 - Faltantes > 30% → excluir variável.
-- Faltantes < 5% → imputar média (simétrica) ou mediana (assimétrica como turbidez e nitrato).
+- Faltantes < 5% → imputar média (simétrica) ou mediana (assimétrica).
 - 5–30% → imputar por KNN.
 - Padronizar com `StandardScaler` antes do KNN sempre que faltantes > 15%.
 
-**Implementação.**
-```python
-from sklearn.impute import KNNImputer
-from sklearn.preprocessing import StandardScaler
-
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(df[features])
-imputer = KNNImputer(n_neighbors=5, weights="distance")
-X_imputed = imputer.fit_transform(X_scaled)
-```
-
 **Validação da imputação.** Comparar média, mediana e desvio padrão antes/depois; verificar impacto no coeficiente de silhueta de um K-Means de referência.
 
-**Correlação.**
-```python
-import seaborn as sns
-corr = df[features].corr(method="pearson")
-sns.heatmap(corr, annot=True, fmt=".2f", cmap="coolwarm")
-```
-Considerar também Spearman para variáveis assimétricas.
+---
+
+### Etapa 3 — Imputação e retirada de outliers (`notebooks/03_imputacao.ipynb`, `05_outliers_iqr_vs_ensemble.ipynb`)
+
+**Baseline: regra do IQR** vs. **ensemble** (KNN + Isolation Forest + LOF) por votação por maioria. O parâmetro `contamination` é calibrado por validação cruzada (estabilidade de Jaccard entre folds).
 
 ---
 
-### Etapa 3 — Análise exploratória (`notebooks/04_analise_exploratoria.ipynb`)
+### Etapa 4 — Análise descritiva e exploratória (`notebooks/04_analise_exploratoria.ipynb`)
 
-- Estatísticas descritivas (média, mediana, desvio padrão, quartis).
-- Visualizações: histograma, boxplot por variável, série temporal por variável, heatmap de correlação.
-- Foco em pH, turbidez, nitrato, fósforo e condutividade elétrica.
-- Sinalizar variáveis com distribuição muito assimétrica (candidatas a transformação log).
-
----
-
-### Etapa 4 — Detecção de outliers (`notebooks/05_outliers_iqr_vs_ensemble.ipynb`)
-
-**Baseline: regra do IQR.**
-```python
-q1, q3 = df[col].quantile([0.25, 0.75])
-iqr = q3 - q1
-mask = (df[col] < q1 - 1.5*iqr) | (df[col] > q3 + 1.5*iqr)
-```
-
-**Ensemble (KNN + Isolation Forest + Local Outlier Factor).**
-```python
-from sklearn.ensemble import IsolationForest
-from sklearn.neighbors import LocalOutlierFactor
-from pyod.models.knn import KNN
-
-iforest = IsolationForest(contamination=0.07, random_state=42)
-lof = LocalOutlierFactor(contamination=0.07, novelty=True)
-knn = KNN(contamination=0.07)
-
-# Votação por maioria
-votes = (iforest.fit_predict(X) == -1).astype(int) + \
-        (lof.fit(X).predict(X) == -1).astype(int) + \
-        knn.fit(X).predict(X)
-outliers = votes >= 2
-```
-
-**Sugestão de melhoria.** Calibrar `contamination` em validação cruzada (Zhao et al., 2020a,b) e comparar com IQR em termos de robustez, especialmente para picos de nitrato e turbidez.
+- Estatísticas descritivas (média, mediana, desvio padrão, quartis, assimetria, % faltantes) das bases bruta e imputada.
+- Visualizações: histogramas, boxplots padronizados e séries temporais.
+- Gerada de forma reprodutível por `scripts/run_descritiva.py`.
 
 ---
 
-### Etapa 5 — K-Means (clustering) — `notebooks/06_kmeans_clustering.ipynb`
+### Etapa 5 — Aplicação de modelos
 
-```python
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
-
-wcss, sil = [], []
-for k in range(2, 11):
-    km = KMeans(n_clusters=k, n_init="auto", random_state=42).fit(X)
-    wcss.append(km.inertia_)
-    sil.append(silhouette_score(X, km.labels_))
-```
-
-- Escolher `k` pelo método do cotovelo (Kaufman & Rousseeuw, 1990) e pela silhueta (Rousseeuw, 1987) — valores > 0,5 indicam clusters efetivos.
-- Interpretar clusters cruzando médias por variável e sazonalidade.
-- Validação visual: scatter plots (ex.: pH × turbidez) coloridos por cluster.
+- **K-Means** (`notebooks/06_kmeans_clustering.ipynb`): escolha de `k` por cotovelo + silhueta; perfis por cluster.
+- **Random Forest** (`notebooks/07_random_forest.ipynb`): classificação de severidade (rotulagem CONAMA 357/2005 Classe 2, com salvaguarda anti-leakage).
+- **Isolation Forest** (`notebooks/08_isolation_forest.ipynb`): detecção de anomalias (contamination 0,05–0,1).
 
 ---
 
-### Etapa 6 — Random Forest (classificação) — `notebooks/07_random_forest.ipynb`
+### Etapa 6 — Análise das métricas (`notebooks/09_validacao_consolidada.ipynb`)
 
-**Rotulagem.** Definir "adequada/inadequada" com base em padrões legais (citados no projeto como CONAMA 357/2005). **Atenção:** o projeto cita também "CONAMA 450/2012", que trata de óleos lubrificantes — confirmar a base legal correta antes da rotulagem. Para irrigação, considerar também FAO 29 (Ayers & Westcot).
-
-```python
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import f1_score, accuracy_score, confusion_matrix
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
-clf = RandomForestClassifier(n_estimators=100, max_depth=10, random_state=42, n_jobs=-1)
-scores = cross_val_score(clf, X_train, y_train, cv=5, scoring="f1_macro")
-clf.fit(X_train, y_train)
-y_pred = clf.predict(X_test)
-```
-
-- Métricas: acurácia e F1 (Biau & Scornet, 2016; Powers, 2020).
-- Matriz de confusão para destacar falsos positivos/negativos (Congalton, 1991).
-- Avaliar importância de variáveis (`clf.feature_importances_`) para conectar com a literatura.
+Reúne silhueta e WCSS do K-Means, F1/acurácia/matriz de confusão do Random Forest, taxa de anomalias do Isolation Forest e a tabela comparativa IQR × Ensemble.
 
 ---
 
-### Etapa 7 — Isolation Forest (anomalias) — `notebooks/08_isolation_forest.ipynb`
+### Etapa 7 — Relatório final (`notebooks/10_relatorio_final.ipynb`)
 
-```python
-from sklearn.ensemble import IsolationForest
-
-iforest = IsolationForest(contamination=0.07, n_estimators=200, random_state=42)
-df["anomalia"] = iforest.fit_predict(X) == -1
-```
-
-- Ajustar `contamination` 0,05–0,1 com base na análise exploratória (Liu et al., 2008).
-- Considerar janelas temporais (mês ou trimestre) para evitar confundir sazonalidade com anomalia.
-- Validação visual: scatter plots destacando os pontos anômalos (P, N e turbidez são prioridade).
-
----
-
-### Etapa 8 — Validação consolidada (`notebooks/09_validacao_consolidada.ipynb`)
-
-Reúne em um único dashboard:
-- Silhueta e WCSS do K-Means.
-- F1, acurácia e matriz de confusão do Random Forest.
-- Taxa de anomalias do Isolation Forest, com confronto contra eventos registrados.
-- Tabela comparativa IQR × Ensemble × Modelos supervisionados.
-
----
-
-### Etapa 9 — Relatório final (`notebooks/10_relatorio_final.ipynb`)
-
-Gera as figuras e tabelas finais (em `reports/figures/` e `reports/tables/`), exporta o `relatorio_final.pdf` e cria a versão "executiva" do estudo.
+Gera as figuras e tabelas finais e o **relatório final em Word** (`reports/relatorio_final.docx`) por meio de `scripts/gerar_relatorio_docx.py`, além dos PDFs auxiliares.
 
 ---
 
 ## 5. Como rodar
 
-Os scripts leem os caminhos de `src/config.py` (não recebem argumentos). Ordem recomendada:
+Os scripts leem os caminhos de `src/config.py` (não recebem argumentos). A forma
+mais simples é o **runner mestre**, que executa todas as etapas do cronograma na
+ordem correta:
+
+```bash
+python scripts/run_all.py          # roda as etapas 2 a 7 do cronograma
+python scripts/run_all.py --list   # lista as etapas
+python scripts/run_all.py --only 5 6  # ex.: só modelos + relatório Word
+```
+
+As etapas do `run_all.py` correspondem a: `run_preprocess.py` →
+`run_outliers.py` → `run_descritiva.py` → `run_train.py` → `run_evaluate.py` →
+`gerar_relatorio_docx.py`.
+
+Para rodar etapa por etapa:
 
 ```bash
 # 0. Extração do PDF SEMAE → data/interim/dados_organizados.csv (rodar uma vez)
 python scripts/extrair_dados.py
 
-# 1. Pipeline de ML (pré-processamento → modelagem → avaliação)
-python scripts/run_preprocess.py   # imputação (+ validação por silhueta do K-Means) + padronização
-python scripts/run_train.py        # K-Means, Random Forest, Isolation Forest → models/, reports/tables/
-python scripts/run_evaluate.py     # métricas + figuras eval_*.png + relatorio_resultados.md + relatorio_final.pdf
+# 1. Pré-processamento e imputação (+ validação por silhueta do K-Means) + padronização
+python scripts/run_preprocess.py
 
-# 2. Análise de outliers completa (6 passos encadeados)
+# 2. Análise de outliers completa (7 passos encadeados; usa matplotlib-venn)
 python scripts/run_outliers.py             # roda tudo
 python scripts/run_outliers.py --list      # lista os passos
-python scripts/run_outliers.py --only 4 5 6  # só tabelas + figuras novas
 
-# 3. Relatórios em PDF (ambos também gerados automaticamente por run_evaluate.py)
-python scripts/gerar_relatorio_pdf.py     # resumo auto (tabelas+figuras) → reports/relatorio_final.pdf
-python scripts/relatorio_md_para_pdf.py   # relatório COMPLETO (texto+figuras+tabelas)
-                                          #   converte reports/relatorio_resultados.md → reports/relatorio_resultados.pdf
+# 3. Análise descritiva e exploratória (Etapa 4 do cronograma)
+python scripts/run_descritiva.py   # descritiva_bruta.csv, descritiva_processada.csv, figuras eda_*.png
 
-# 4. (Re)gerar os notebooks 00–10 a partir de src/
+# 4. Modelagem: K-Means, Random Forest, Isolation Forest → models/, reports/tables/
+python scripts/run_train.py
+
+# 5. Métricas + figuras eval_*.png + relatorio_resultados.md + relatorio_final.pdf
+python scripts/run_evaluate.py
+
+# 6. RELATÓRIO FINAL em Word (~20 páginas) → reports/relatorio_final.docx
+python scripts/gerar_relatorio_docx.py
+
+# Relatórios em PDF auxiliares
+python scripts/gerar_relatorio_pdf.py     # resumo auto (tabelas+figuras)
+python scripts/relatorio_md_para_pdf.py   # relatório completo em PDF a partir do .md
+
+# (Re)gerar os notebooks 00–10 a partir de src/
 python scripts/gerar_notebooks.py
 
-# 5. Testes
+# Testes
 pytest
 
 # Ou, interativamente, executar os notebooks em ordem
 jupyter lab notebooks/
 ```
+
+**Deliverable principal:** `reports/relatorio_final.docx` — relatório de
+resultados (~20 páginas, 16 figuras e 10 tabelas) gerado por
+`scripts/gerar_relatorio_docx.py` a partir das tabelas e figuras do pipeline.
 
 ---
 
@@ -323,27 +242,27 @@ jupyter lab notebooks/
 
 - **Sementes fixas** em todo modelo (`random_state=42`).
 - **Versionamento de código** no GitHub.
-- **Versionamento de dados**: hash SHA-256 do CSV bruto registrado em `docs/decisoes_de_projeto.md`.
-- **Notebooks limpos** antes de commitar (`pre-commit` + `nbstripout`).
-- **Ambiente**: `requirements.txt` com versões pinadas; opcionalmente `Dockerfile` para isolamento total.
-- **Testes** mínimos cobrindo carga, imputação, rotulagem e métricas.
-- **Documentação de decisões** em Architectural Decision Records (ADRs).
+- **Ambiente**: `requirements.txt` com versões mínimas fixadas.
+- **Testes** cobrindo carga, imputação, outliers e métricas (`pytest`).
+- **Documentação de decisões** em Architectural Decision Records (ADRs), em `docs/`.
 
 ---
 
 ## 7. Referências (selecionadas)
 
 - Aggarwal, C. C. (2017). *Outlier Analysis*. Springer.
+- Ayers, R. S.; Westcot, D. W. (1985). *Water quality for agriculture*. FAO 29.
 - Biau, G.; Scornet, E. (2016). A random forest guided tour. *Test*, 25(2).
 - Kaufman, L.; Rousseeuw, P. J. (1990). *Finding Groups in Data*. Wiley.
-- Lepot, M. et al. (2017). Interpolation in time series. *Water*, 9(10), 796.
-- Liu, F. T. et al. (2008). Isolation Forest.
+- Little, R. J. A. (1988). A test of MCAR for multivariate data. *JASA*, 83(404).
+- Liu, F. T. et al. (2008). Isolation Forest. *ICDM*.
 - Pedregosa, F. et al. (2011). Scikit-learn. *JMLR*, 12.
 - Powers, D. M. W. (2020). Evaluation: precision, recall, F-measure, ROC.
 - Rousseeuw, P. J. (1987). Silhouettes. *J. Comp. Appl. Math.*, 20.
 - Silva, R. F. et al. (2024). A Data-Driven Method for Water Quality Analysis and Prediction for Localized Irrigation. *AgriEngineering*, 6(2).
 - Troyanskaya, O. et al. (2001). Missing value estimation methods for DNA microarrays. *Bioinformatics*, 17(6).
-- Zhao, Y. et al. (2020a, 2020b). PyOD / COPOD.
+- van Buuren, S. (2018). *Flexible Imputation of Missing Data*. CRC Press.
+- Zhao, Y. et al. (2019/2020). PyOD. *JMLR*.
 - ANA (2021, 2024); PCJ (2024); ONU (2015, 2024); Brasil — CONAMA 357/2005.
 
 > Lista completa: na seção "Referências" no projeto FAPESP original.

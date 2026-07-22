@@ -8,7 +8,7 @@ Gera, a partir de ``data/interim/dados_organizados.csv``:
 
 Plots:
 
-1. ``missing_pct_barras.png``    — % de NaN por variável, com cortes 5% e 30%.
+1. ``missing_pct_barras.png``    — % de NaN por variável, com corte 5%.
 2. ``missing_matriz.png``        — matriz observação × variável (branco = NaN).
 3. ``missing_corr.png``          — correlação dos *padrões* de faltantes
    (variáveis cujos NaN aparecem juntos).
@@ -67,23 +67,47 @@ def tabela_faltantes(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def plot_barras(tab: pd.DataFrame, out: Path) -> None:
-    """% NaN por variável com cortes 5% / 30% destacados."""
-    cores = {"EXCLUIR": "#c0392b", "KNN": "#e67e22", "Mediana": "#27ae60", "Média": "#2980b9"}
-    fig, ax = plt.subplots(figsize=(13, 6))
-    ax.bar(tab["variavel"], tab["pct_nan"], color=[cores[d] for d in tab["decisao"]])
-    ax.axhline(THRESH_DROP * 100, color="#c0392b", ls="--", lw=1, label=f"Excluir (>{THRESH_DROP*100:.0f}%)")
-    ax.axhline(THRESH_KNN * 100, color="#e67e22", ls="--", lw=1, label=f"KNN (≥{THRESH_KNN*100:.0f}%)")
-    ax.set_ylabel("% de valores ausentes")
-    ax.set_title("Faltantes por variável (mensais, estatística Méd., 192 observações)")
-    ax.tick_params(axis="x", rotation=80)
-    for i, (v, p, d) in enumerate(zip(tab["variavel"], tab["pct_nan"], tab["decisao"], strict=False)):
-        ax.text(i, p + 1, f"{p:.1f}", ha="center", fontsize=8)
-    # Legenda combinando regras + cortes
+    """% NaN por variável: nome ACIMA da barra e % de faltante ABAIXO da barra.
+
+    Mostra apenas as variáveis MANTIDAS (decisão != EXCLUIR), i.e. de C.F.
+    até COR. Excluir as barras vermelhas amplia a escala do eixo Y e deixa
+    as diferenças entre as variáveis pequenas muito mais legíveis.
+    """
+    # Faixa <5% (Média e Mediana) recebe UMA cor única, pois usa-se média e
+    # mediana em todas as variáveis com menos de 5% de faltantes.
+    COR_EXCLUIR, COR_KNN, COR_SIMPLES = "#c0392b", "#e67e22", "#27ae60"
+    cores = {"EXCLUIR": COR_EXCLUIR, "KNN": COR_KNN,
+             "Mediana": COR_SIMPLES, "Média": COR_SIMPLES}
+    # Remove as variáveis excluídas (>30% de faltantes) do gráfico.
+    tab = tab[tab["decisao"] != "EXCLUIR"].reset_index(drop=True)
+    n = len(tab)
+    WIDTH = 0.62   # largura das barras (fração do passo unitário; menor = mais finas)
+    MARGEM = 0.55  # folga mínima nas laterais (eixo justo, sem espaço sobrando)
+    x = list(range(n))
+    # Figura mais estreita => barras finas mesmo com o eixo justo (sem margens grandes).
+    fig, ax = plt.subplots(figsize=(11, 9.5))
+    ax.bar(x, tab["pct_nan"], color=[cores[d] for d in tab["decisao"]], width=WIDTH)
+    ax.axhline(THRESH_KNN * 100, color="#e67e22", ls="--", lw=1)
+    ax.set_ylabel("% de valores ausentes", fontsize=22)
+    ax.set_title("Faltantes por variável mantida\n(médias mensais · 192 observações)", fontsize=22)
+    ax.tick_params(axis="y", labelsize=19)
+    ax.set_xticks([])
+    topo = float(tab["pct_nan"].max())
+    for xi, (v, p, d) in zip(x, zip(tab["variavel"], tab["pct_nan"], tab["decisao"], strict=False)):
+        # nome da variável ACIMA da barra
+        ax.text(xi, p + 0.4, v, ha="center", va="bottom", rotation=90, fontsize=19)
+        # % de dado faltante ABAIXO da barra, na VERTICAL e alinhado com a barra
+        ax.text(xi, -0.6, f"{p:.1f}%", ha="center", va="top", rotation=90, fontsize=18)
+    ax.set_ylim(-6.0, topo + 14)
+    ax.set_xlim(x[0] - MARGEM, x[-1] + MARGEM)
+    # Legenda: apenas as regras aplicáveis às variáveis mantidas + corte 5%.
     from matplotlib.patches import Patch
-    legenda = [Patch(facecolor=cores[k], label=k) for k in ["EXCLUIR", "KNN", "Mediana", "Média"]]
-    legenda += [plt.Line2D([0], [0], color="#c0392b", ls="--", label=f">{THRESH_DROP*100:.0f}% → Excluir"),
-                plt.Line2D([0], [0], color="#e67e22", ls="--", label=f"≥{THRESH_KNN*100:.0f}% → KNN")]
-    ax.legend(handles=legenda, loc="upper right", fontsize=8)
+    legenda = [
+        Patch(facecolor=COR_KNN, label="KNN (5–30%)"),
+        Patch(facecolor=COR_SIMPLES, label="Média/Mediana (<5%)"),
+    ]
+    legenda += [plt.Line2D([0], [0], color=COR_KNN, ls="--", label=f"≥{THRESH_KNN*100:.0f}% → KNN")]
+    ax.legend(handles=legenda, loc="upper right", fontsize=17)
     fig.tight_layout()
     fig.savefig(out, dpi=150)
     plt.close(fig)
