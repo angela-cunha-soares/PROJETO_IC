@@ -19,4 +19,6 @@ models/
 
 # SO / editor
 .DS_Store
-Thumbs.db
+.hypothesis/"
+.claude/
+.vscode/
